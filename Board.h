@@ -18,7 +18,9 @@ private:
 
 	int oppositionScore;
 
-	vector<int> mainBoard(14);
+	vector<int> mainBoard;
+
+	bool goAgain;
 
 
 
@@ -30,12 +32,28 @@ public:
 
 	Board(vector<int> v);
 
+	Board(Board inBoard, int i);
+
+	int BowlMarbles(int a);
+
+	vector<int> CopyCurrentBoard();
+
+	//vector<Board> getNeighborsOppositionMove();
+
+	//vector<Board> getNeighborsPlayerMove();
+
 	Board CopyBoard(Board b);
 
-	vector<Board> getNeighbors();
+	//vector<Board> getNeighbors();
+
+	int PlayerScore();
+
+	int OppositionScore();
 
 
 
 
 
-}
+};
+
+#endif
