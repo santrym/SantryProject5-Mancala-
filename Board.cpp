@@ -60,32 +60,33 @@ Board::Board(Board inBoard, int i)
 				place = 12;
 			}
 			if(count == 1){
-				if(retBoard[place] == 0 && place != 6 && place != 13){
+				if(retBoard[place] == 0 && place != 6 && place != 13 && place > 6){
 					if(retBoard[12 - place] != 0){
-						retBoard[6] = retBoard[6] + retBoard[place] + retBoard[12-place];
+						retBoard[6] = retBoard[6] + 1 + retBoard[12-place];
 						retBoard[place] = 0;
 						retBoard[12 - place] = 0;
+						count = count - 1;
+						place = place - 1;
 					}
 					else{
 						retBoard[place] = retBoard[place] + 1;
 						count = count - 1;
-						place = i - 1;
+						place = place - 1;
 					}
 				}
 				else{
 						retBoard[place] = retBoard[place] + 1;
 						count = count - 1;
-						place = i - 1;
+						place = place - 1;
 					}
 			}
 			else{
 				retBoard[place] = retBoard[place] + 1;
 				count = count - 1;
-				place = i - 1;
+				place = place - 1;
 			}
 		}
 	}
-	
 	else{
 		while(count != 0)
 		{
@@ -102,28 +103,30 @@ Board::Board(Board inBoard, int i)
 			}
 
 			if(count == 1){
-				if(retBoard[place] == 0 && place != 6 && place != 13){
+				if(retBoard[place] == 0 && place != 6 && place != 13 && place < 6){
 					if(retBoard[12 - place] != 0){
 						retBoard[6] = retBoard[6] + retBoard[place] + retBoard[12-place];
 						retBoard[place] = 0;
 						retBoard[12 - place] = 0;
+						count = count - 1;
+						place = place - 1;
 					}
 					else{
 						retBoard[place] = retBoard[place] + 1;
 						count = count - 1;
-						place = i - 1;
+						place = place - 1;
 					}
 				}
 				else{
 					retBoard[place] = retBoard[place] + 1;
 					count = count - 1;
-					place = i - 1;
+					place = place - 1;
 				}
 			}
 			else{
 			retBoard[place] = retBoard[place] + 1;
 			count = count - 1;
-			place = i - 1;
+			place = place - 1;
 			}
 		}
 	}

@@ -50,7 +50,7 @@ public:
 
 	int OppositionScore();
 
-
+	int Difference();
 
 
 
