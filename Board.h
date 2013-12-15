@@ -52,7 +52,9 @@ public:
 
 	int Difference();
 
+	bool GoAgainer();
 
+	vector<int> MinMax(Board b, int depth, bool doMax);
 
 };
 
