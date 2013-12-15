@@ -8,6 +8,10 @@
 using namespace std;
 
 
+
+/*
+*	Standard Board Constructor with no input fields
+*/
 Board::Board()
 {
 	goAgain = false;
@@ -30,17 +34,23 @@ Board::Board()
 }
 
 
+/*
+*	Board constructor when the board contents are known. Aka in  vector.
+*/
 Board::Board(vector<int> v)
 {
 	goAgain = false;
 	mainBoard = v;
 	playerScore = mainBoard[6];
 	oppositionScore = mainBoard[13];
-
 	
 }
 
 
+
+/*
+*	This constructor is used when we have a Board and we want the baord after a certain bowl "i" has been played.	
+*/
 Board::Board(Board inBoard, int i)
 {
 	goAgain = false;
@@ -49,16 +59,21 @@ Board::Board(Board inBoard, int i)
 	int place = i - 1;
 	vector<int> retBoard = inBoard.CopyCurrentBoard();
 	retBoard[i] = 0;
+	//if bowl is played by player 2
 	if(i > 6){
 		while(count != 0)
 		{
+			// If last marble is placed in mancala they get to go again.
 			if(count == 1 && place == 6){
 				goAgain = true;
 			}
 
+			// Stops player 1 from scoring for the other player
 			if(place == -1){
 				place = 12;
 			}
+
+			// Tests to see if last marble placement has significance.
 			if(count == 1){
 				if(retBoard[place] == 0 && place != 6 && place != 13 && place > 6){
 					if(retBoard[12 - place] != 0){
@@ -80,6 +95,8 @@ Board::Board(Board inBoard, int i)
 						place = place - 1;
 					}
 			}
+
+			// Distributes marbles to appropriate bowls.
 			else{
 				retBoard[place] = retBoard[place] + 1;
 				count = count - 1;
@@ -87,27 +104,35 @@ Board::Board(Board inBoard, int i)
 			}
 		}
 	}
+
+	// If bowl is played by Player 1.
 	else{
 		while(count != 0)
 		{
+			
+			// Keeps place counter on track so that Player 2 can score.
 			if(place == -1){
 				place = 13;
 			}
 
+
+			// Tests if last marble is placed in mancala, if it is the player will get to go agian
 			if(count == 1 && place == 13){
 				goAgain = true;
 			}
 
 			
-
+			// Stops player 2 from scoring for the other player.
 			if(place == 6){
 				place = 5;
 			}
 
+
+			// Tests if last marble placement has significance.
 			if(count == 1){
 				if(retBoard[place] == 0 && place != 6 && place != 13 && place < 6){
 					if(retBoard[12 - place] != 0){
-						retBoard[6] = retBoard[6] + retBoard[place] + retBoard[12-place];
+						retBoard[13] = retBoard[13] + retBoard[place] + retBoard[12-place];
 						retBoard[place] = 0;
 						retBoard[12 - place] = 0;
 						count = count - 1;
@@ -125,6 +150,8 @@ Board::Board(Board inBoard, int i)
 					place = place - 1;
 				}
 			}
+			
+			// Distributes marbles appropriately.
 			else{
 			retBoard[place] = retBoard[place] + 1;
 			count = count - 1;
@@ -140,6 +167,9 @@ Board::Board(Board inBoard, int i)
 
 
 
+/*
+*	Returns the number of marbles in a particular bowl "a".
+*/
 int Board::BowlMarbles(int a)
 {
 	int retVal = mainBoard[a];
@@ -148,6 +178,9 @@ int Board::BowlMarbles(int a)
 
 
 
+/*
+*	Returns the current board state in form of a vector of integers.
+*/
 vector<int> Board::CopyCurrentBoard()
 {
 	// creates a vector a the is equal to currentBoard vector.
@@ -159,6 +192,9 @@ vector<int> Board::CopyCurrentBoard()
 
 
 
+/*
+*	Gets the neighbors for player 2
+*/
 vector<Board> Board::getNeighborsOppositionMove(Board b)
 {
 	vector<Board> retVec;
@@ -174,6 +210,10 @@ vector<Board> Board::getNeighborsOppositionMove(Board b)
 
 
 
+
+/*
+*	Gets neighbors for player 1.
+*/
 vector<Board> Board::getNeighborsPlayerMove(Board b)
 {
 	vector<Board> retVec;
@@ -190,9 +230,15 @@ vector<Board> Board::getNeighborsPlayerMove(Board b)
 
 
 
+
+/*
+*	Returns the player 2's score
+*/
 int Board::PlayerScore()
 {
-	int retVal = playerScore;
+	int retVal = playerScore * 4;
+
+	retVal = retVal + mainBoard[7] + mainBoard[8] + mainBoard[9] + mainBoard[10] + mainBoard[11] + mainBoard[12];
 	/*
 	for (int i = 7; i < 13; ++i)
 	{
@@ -204,9 +250,15 @@ int Board::PlayerScore()
 
 
 
+
+/*
+*	Returns Player 1's score.
+*/
 int Board::OppositionScore()
 {
-	int retVal = oppositionScore;
+	int retVal = oppositionScore * 4;
+
+	retVal = retVal + mainBoard[0] + mainBoard[1] + mainBoard[2] + mainBoard[3] + mainBoard[4] + mainBoard[5];
 	/*
 	for (int i = 0; i < 6; ++i)
 	{
@@ -218,6 +270,9 @@ int Board::OppositionScore()
 
 
 
+/*
+*	returns the Difference between the scores of player 1 and 2.
+*/
 int Board::Difference()
 {
 	int difference = playerScore - oppositionScore;
@@ -226,6 +281,9 @@ int Board::Difference()
 
 
 
+/*
+*	 returns the goAgain field which determines if a board allows the current player to go again.
+*/
 bool Board::GoAgainer()
 {
 	return goAgain;
@@ -233,105 +291,9 @@ bool Board::GoAgainer()
 
 
 
-/**
-//  Get oppositions best option
-int Board::MinMax(Board b, int depth)
-{
-	
-	if(depth % 2 == 0){
-		vector<int> rettt= b.MinMaxOppLast(Board b, int depth);
-		
-		//returns the move value
-		return rettt[0] + 7;
-	}
-
-
-	else{
-		b.MinMaxPlayerLast(Board b, int depth);
-	}
-
-
-}
-
-
-
-
-vector<int> Board::MinMaxOppLast(Board b, int depth)
-{
-	vector<int> MinMaxVals(2);
-	MinMaxVals[0] = 0;
-	MinMaxVals[1] = 0;
-
-
-	//base case
-	if(depth == 1){
-		vector<int> retVBC(2);
-		int minVal = 100;
-		int place = 10;
-		vector<Board> brds = b.getNeighborsOppositionMove();
-		for (int i = 0; i < 6; ++i)
-		{
-		 	Board aa = brds[i];
-		 	int val = aa.Difference();
-		 	if(val < minVal){
-		 		minVal = val;
-		 		place = i;
-		 	}
-		} 
-		retVBC[0] = place;
-		retVBC[1] = minVal;
-		return retVBC 
-
-	}
-
-
-	// players turn.
-	if(depth % 2 == 0){
-		vector<int> veectorRat(2);
-		int maxVall = -100;
-		int placeMax = 111;
-		vector<Board> bbrds = b.getNeighborsPlayerMove();
-		for (int i = 0; i < 6; ++i)
-		{
-			Board bbb = bbrds[i];
-			vector<int> loopVals = MinMaxOppLast(bbb, depth - 1);
-			if(loopVals[1] > maxVall){
-				maxVall = loopVals[1];
-				placeMax = i;
-			}	
-		}
-		veectorRat[0] = placeMax;
-		veectorRat[1] = maxVall;
-		return veectorRat;
-	}
-
-
-	// Opponants turn.
-	else{
-		vector<int> veectorRatt(2);
-		int minVall = -100;
-		int placeMin = 111;
-		for (int i = 7; i < 13; ++i)
-		{
-			vector<int> loopVals = MinMaxOppLast(b, depth - 1);
-			if(loopVals[1] > maxVall){
-				minVall = loopVals[1];
-				placeMin = loopVals[0];
-			}
-		}
-	}
-}
-
-
-
-int Board::MinMaxPlayerLast(Board b, int depth)
-{
-	
-}
-**/
-
-
-
+/*
+*	Used for computer when playing 1 player game. Determines the best possible move givena board and a depth.
+*/
 vector<int> Board::MinMax(Board b, int depth, bool doMax)
 {
 	vector<int> retVec(2);
@@ -342,7 +304,7 @@ vector<int> Board::MinMax(Board b, int depth, bool doMax)
 
 			int maxVal = -100;
 			int place = 10;
-			vector<Board> brds = b.getNeighborsPlayerMove();
+			vector<Board> brds = b.getNeighborsOppositionMove(b);
 			for (int i = 0; i < 6; ++i)
 			{
 			 	Board aa = brds[i];
@@ -361,7 +323,7 @@ vector<int> Board::MinMax(Board b, int depth, bool doMax)
 
 			int minVal = 100;
 			int place = 10;
-			vector<Board> brds = b.getNeighborsOppositionMove();
+			vector<Board> brds = b.getNeighborsPlayerMove(b);
 			for (int i = 0; i < 6; ++i)
 			{
 			 	Board aa = brds[i];
@@ -380,7 +342,7 @@ vector<int> Board::MinMax(Board b, int depth, bool doMax)
 	}
 
 	if(depth % 2 == 0){
-		vector<Board> nebs = b.getNeighborsOppositionMove();
+		vector<Board> nebs = b.getNeighborsPlayerMove(b);
 		int MinVaal = 1000;
 		int MinPlace = 100;
 		for (int i = 0; i < 6; ++i)
@@ -402,7 +364,7 @@ vector<int> Board::MinMax(Board b, int depth, bool doMax)
 
 
 	if(depth % 2 == 1){
-		vector<Board> nebs = b.getNeighborsPlayerMove();
+		vector<Board> nebs = b.getNeighborsOppositionMove(b);
 		int maxVal = -111;
 		int MaxPlace = 100;
 		for (int i = 0; i < 6; ++i)

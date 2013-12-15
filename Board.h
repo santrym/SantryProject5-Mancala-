@@ -54,6 +54,10 @@ public:
 
 	bool GoAgainer();
 
+	vector<Board> getNeighborsOppositionMove(Board b);
+
+	vector<Board> getNeighborsPlayerMove(Board b);
+
 	vector<int> MinMax(Board b, int depth, bool doMax);
 
 };
