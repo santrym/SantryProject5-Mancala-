@@ -310,6 +310,7 @@ vector<int> Board::MinMax(Board b, int depth, bool doMax)
 
 	//base Case
 	if(depth == 1){
+		//This is if the lowest level is Player 1's turn.
 		if(doMax == true){
 
 			int maxVal = -100;
@@ -329,6 +330,8 @@ vector<int> Board::MinMax(Board b, int depth, bool doMax)
 			return retVec;
 			
 		}
+
+		// This is if the lowest level is Player 2's turn.
 		if(doMax == false){
 
 			int minVal = 100;
@@ -351,6 +354,11 @@ vector<int> Board::MinMax(Board b, int depth, bool doMax)
 
 	}
 
+	/*
+	* Non base case. uses recursion if the depth is divisible by 2.
+	* It gets the player 1's possible moves and chooses the best one, to prepare for the worst case scenario
+	* then it uses recursion with that board.
+	*/
 	if(depth % 2 == 0){
 		vector<Board> nebs = b.getNeighborsPlayerMove(b);
 		int MinVaal = 1000;
@@ -373,6 +381,11 @@ vector<int> Board::MinMax(Board b, int depth, bool doMax)
 	}
 
 
+	/*
+	* Non base case. uses recursion if the depth is not divisible by 2.
+	* Finds player 2's possible moves and uses recursion on each one to go deeper and find the best possible choice at the 
+	* given level.
+	*/
 	if(depth % 2 == 1){
 		vector<Board> nebs = b.getNeighborsOppositionMove(b);
 		int maxVal = -111;
@@ -393,6 +406,10 @@ vector<int> Board::MinMax(Board b, int depth, bool doMax)
 		return retVec;
 	}
 }
+
+
+
+
 
 
 
