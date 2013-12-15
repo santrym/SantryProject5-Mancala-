@@ -1,0 +1,20 @@
+README
+
+Code Explaination
+
+Mike Santry
+
+12/15/13
+
+
+Main Function
+
+	This program starts out printing out a few welcomeing lines and then asking for inputs. Given the inputs of players and depth, the program sets up either a two human player game or a computer verses human game. The depth is used to for the computer player to determine it's ability to plan out the best possible move, thus the larger the depth the more difficult the computer player will be. Once the game starts the user is prompted to choose bowls to play and then standard mancala rules come into play and the game continues to create moves for the computer then take in input from the user until the necesary fields are at the limits set to end the game.
+
+
+
+Board Class
+
+	The Board class includes many methods but the majority of them are accessors. Thus the only mutator methods within the class are the Board Constructor that creates a new board given teh bowl that is about to be played, the MinMax function that finds the best possible move for the computer player given a certain depth, and the get Neighbor classes which quite simply get the possible neighbors using the Board constructor that uses a given bowl as a parameter.
+
+
