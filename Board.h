@@ -10,6 +10,16 @@
 using namespace std;
 
 
+/**
+*		
+*		Board Class for Mancala. Contains all of the board operations needed to perform the game.	
+*
+*		Mike Santry
+*		12/15/13
+*
+**/
+
+
 class Board
 {
 private:

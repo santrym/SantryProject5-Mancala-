@@ -13,32 +13,42 @@ using namespace std;
 
 
 /**
-*
-*
+*		
 *		Main For Mancala Game.	
 *
+*		Mike Santry
+*		12/15/13
 *
 **/
 
 
 int main()
 {
+	// Tells if player 2 can go again
 	bool goAgainOpposition = true;
 
+	// Tells if Player 1 can go again
 	bool goAgainPlayer = true;
 
+	// Used to check for valid inputs
 	bool validInput = false;
 
+	// Used as switch for when a game is over
 	bool gameOn = true;
 
+	// the Bowl about to be played
 	int currentBowl = 0;
 
+	// Holds number of players
 	int players = 0;
 
+	// Holds the Depth... and smugness.
 	int JohnnyDepp = 0;
 
+	// Holds the current board
 	Board theBoard = Board();
 
+	// Holds the board state, aka the number of marbles in each bowl/mancala.
 	vector<int> theActualBoard = theBoard.CopyCurrentBoard();
 
 
@@ -332,6 +342,8 @@ int main()
 
 			goAgainPlayer = true;
 
+
+			// Player 2's Turn
 			if(gameOn == true){
 				while(goAgainOpposition){	
 					
